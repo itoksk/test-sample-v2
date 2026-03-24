@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python インタラクティブ・ラーニング</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f4f7f6; }
+        header { background: #3776ab; color: white; padding: 1rem; text-align: center; border-radius: 8px; margin-bottom: 20px; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        code { background: #eee; padding: 2px 5px; border-radius: 4px; font-family: 'Courier New', Courier, monospace; }
+        .editor-container { background: #282c34; padding: 15px; border-radius: 8px; }
+        textarea { width: 100%; height: 100px; background: transparent; color: #abb2bf; border: none; font-family: 'Courier New', Courier, monospace; font-size: 16px; outline: none; resize: vertical; }
+        .controls { margin-top: 10px; display: flex; justify-content: flex-end; }
+        button { background: #ffd43b; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        button:hover { background: #ffc107; }
+        .output-area { margin-top: 15px; background: #fff; border-left: 5px solid #3776ab; padding: 10px; min-height: 30px; white-space: pre-wrap; font-family: monospace; }
+        .hint { font-size: 0.9em; color: #666; font-style: italic; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Python 初心者ガイド</h1>
+    <p>基本を学んで、実際にコードを動かしてみよう！</p>
+</header>
+
+<div class="card">
+    <h2>1. 変数と型</h2>
+    <p>Pythonでは、<code>name = "Alice"</code> のようにデータを変数に保存します。</p>
+    <ul>
+        <li><strong>数値:</strong> <code>x = 10</code></li>
+        <li><strong>文字列:</strong> <code>text = "Hello"</code></li>
+    </ul>
+    <p class="hint">下のボックスに <code>print(x)</code> と入力して実行してみましょう。</p>
+</div>
+
+<div class="card">
+    <h3>🛠 インタラクティブ・エディタ</h3>
+    <div class="editor-container">
+        <textarea id="pythonInput"># ここにコードを書いてみてください
+name = "Python学習者"
+message = "こんにちは！"
+print(message + name)</textarea>
+    </div>
+    <div class="controls">
+        <button onclick="runCode()">実行する</button>
+    </div>
+    <div class="output-area" id="output">実行結果がここに表示されます...</div>
+</div>
+
+<script>
+    function runCode() {
+        const input = document.getElementById('pythonInput').value;
+        const output = document.getElementById('output');
+        
+        // 簡易的なPython風エミュレート（JavaScriptで擬似再現）
+        try {
+            output.innerText = "";
+            let logs = [];
+            
+            // print関数をキャプチャ
+            const mockPrint = (val) => logs.push(val);
+            
+            // 文字列操作などの簡単なロジックをJSに変換して実行
+            // 注：これは教育用の簡易的な仕組みです。
+            let jsCode = input
+                .replace(/print\((.*)\)/g, 'mockPrint($1)')
+                .replace(/name = "(.*)"/g, 'let name = "$1"')
+                .replace(/message = "(.*)"/g, 'let message = "$1"');
+
+            eval(jsCode);
+            output.innerText = logs.length > 0 ? logs.join('\n') : "出力はありません（printを使ってみてね）";
+            output.style.color = "#333";
+        } catch (e) {
+            output.innerText = "エラー: Pythonの構文を正しく書いてね！\n(この簡易版では基本的な変数定義とprintのみ対応しています)";
+            output.style.color = "red";
+        }
+    }
+</script>
+
+</body>
+</html>
